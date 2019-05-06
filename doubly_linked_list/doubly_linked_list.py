@@ -64,18 +64,54 @@ class DoublyLinkedList:
             self.head = ListNode(value)
             self.tail = current_head
             self.length += 1
+            print(f"Adding {value} to head")
         else:
             self.head = ListNode(value, None, current_head)
             self.length += 1
+            print(f"Adding {value} to head")
 
     def remove_from_head(self):
-        pass
+        current_head = self.head
+
+        if current_head.next:
+            self.head = current_head.next
+            self.length -= 1
+            print(f"Removing {current_head.value} from head")
+
+        return current_head
 
     def add_to_tail(self, value):
-        pass
+        current_tail = self.tail
+
+        if self.head == self.tail:
+            self.tail = ListNode(value, self.head)
+            self.head.next = self.tail
+            self.length += 1
+            print(f"Adding {value} to tail")
+        else:
+            self.tail = ListNode(value, current_tail)
+            self.length += 1
+            print(f"Adding {value} to tail")
 
     def remove_from_tail(self):
-        pass
+        current_tail = self.tail
+        if self.tail == None:
+            print("The list appears to be empty")
+
+        elif self.tail == self.head:
+            self.tail = None
+            self.head = None
+            self.length -= 1
+            print(f"Removing {current_tail.value} from tail")
+            return self.tail
+
+        else:
+            self.tail = current_tail.prev
+            self.length -= 1
+            if self.length == 1:
+                self.tail = self.head
+            print(f"Removing {current_tail.value} from tail")
+            return current_tail
 
     def move_to_front(self, node):
         pass
@@ -90,9 +126,24 @@ class DoublyLinkedList:
         pass
 
 
-my_DLL = DoublyLinkedList(ListNode("alpha"))
+my_DLL = DoublyLinkedList(ListNode("gamma"))
+print(my_DLL)
 
 my_DLL.add_to_head("beta")
-my_DLL.add_to_head("gamma")
+print(my_DLL)
+my_DLL.add_to_head("alpha")
+print(my_DLL)
+my_DLL.remove_from_head()
+print(my_DLL)
+my_DLL.add_to_tail("delta")
+print(my_DLL)
+my_DLL.remove_from_tail()
+print(my_DLL)
+my_DLL.remove_from_tail()
+print(my_DLL)
+my_DLL.remove_from_tail()
+print(my_DLL)
+my_DLL.remove_from_tail()
+
 
 print(my_DLL)
