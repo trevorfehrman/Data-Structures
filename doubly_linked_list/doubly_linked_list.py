@@ -24,7 +24,7 @@ class ListNode:
     if current_prev:
       current_prev.next = self.prev
 
-  """Rearranges this ListNode's previous and next pointers
+  """Rearranges this ListNode's previous and next pointer
   accordingly, effectively deleting this ListNode."""
   def delete(self):
     if self.prev:
