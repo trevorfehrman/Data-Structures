@@ -11,19 +11,11 @@ class ListNode:
     def __repr__(self):
         return f"{self.value}"
 
-    """Wrap the given value in a ListNode and insert it
-  after this node. Note that this node could already
-  have a next node it is point to."""
-
     def insert_after(self, value):
         current_next = self.next
         self.next = ListNode(value, self, current_next)
         if current_next:
             current_next.prev = self.next
-
-    """Wrap the given value in a ListNode and insert it
-  before this node. Note that this node could already
-  have a previous node it is point to."""
 
     def insert_before(self, value):
         current_prev = self.prev
@@ -31,18 +23,11 @@ class ListNode:
         if current_prev:
             current_prev.next = self.prev
 
-    """Rearranges this ListNode's previous and next pointer
-  accordingly, effectively deleting this ListNode."""
-
     def delete(self):
         if self.prev:
             self.prev.next = self.next
         if self.next:
             self.next.prev = self.prev
-
-
-"""Our doubly-linked list class. It holds references to
-the list's head and tail nodes."""
 
 
 class DoublyLinkedList:
@@ -62,11 +47,12 @@ class DoublyLinkedList:
 
         if self.tail == None:
             self.head = ListNode(value)
-            self.tail = current_head
+            self.tail = self.head
             self.length += 1
             print(f"Adding {value} to head")
         else:
             self.head = ListNode(value, None, current_head)
+            current_head.prev = self.head
             self.length += 1
             print(f"Adding {value} to head")
 
@@ -114,16 +100,37 @@ class DoublyLinkedList:
             return current_tail
 
     def move_to_front(self, node):
-        pass
+        current_target = node
+        current_head = self.head
+        print(f"Moving {current_target.value} to front")
+        node.delete()
+        self.head.insert_before(current_target.value)
+        self.head = current_target
+        self.head.next = current_head
 
     def move_to_end(self, node):
-        pass
+        current_target = node
+        current_tail = self.tail
+        print(f"Moving {current_target.value} to tail")
+        node.delete()
+        self.tail.insert_after(current_target.value)
+        self.tail = current_target
+        self.tail.prev = current_tail
+        self.tail.next = None
 
     def delete(self, node):
-        pass
+        node.delete()
+        self.length -= 1
 
     def get_max(self):
-        pass
+        current = self.head
+        leader = self.head.value
+
+        while current is not self.tail:
+            current = current.next
+            leader = max(leader, current.value)
+        print(f"Highest value is {leader}")
+        return leader
 
 
 my_DLL = DoublyLinkedList(ListNode("gamma"))
@@ -133,17 +140,14 @@ my_DLL.add_to_head("beta")
 print(my_DLL)
 my_DLL.add_to_head("alpha")
 print(my_DLL)
-my_DLL.remove_from_head()
-print(my_DLL)
-my_DLL.add_to_tail("delta")
-print(my_DLL)
-my_DLL.remove_from_tail()
-print(my_DLL)
-my_DLL.remove_from_tail()
-print(my_DLL)
-my_DLL.remove_from_tail()
-print(my_DLL)
-my_DLL.remove_from_tail()
+# my_DLL.remove_from_head()
+# print(my_DLL)
+# my_DLL.add_to_tail("delta")
+# print(my_DLL)
+# my_DLL.remove_from_tail()
+# print(my_DLL)
+# my_DLL.add_to_tail("New Tail")
+# print(my_DLL)
 
 
 print(my_DLL)
