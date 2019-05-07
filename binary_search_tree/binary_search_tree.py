@@ -51,28 +51,25 @@ class BinarySearchTree:
 
             if node.left:
                 queue.append(node.left)
-
             if node.right:
                 queue.append(node.right)
-
             if node.value > leader:
                 leader = node.value
+
         return leader
 
     def for_each(self, cb):
-
         queue = [self]
 
         while len(queue):
             node = queue.pop(0)
-
             cb(node.value)
 
             if node.left:
                 queue.append(node.left)
-
             if node.right:
                 queue.append(node.right)
+
         return self
 
 
