@@ -39,10 +39,41 @@ class BinarySearchTree:
                 current = current.right
 
     def get_max(self):
-        pass
+        leader = self.value
+
+        if self.right == None:
+            return leader
+
+        queue = [self.right]
+
+        while len(queue):
+            node = queue.pop(0)
+
+            if node.left:
+                queue.append(node.left)
+
+            if node.right:
+                queue.append(node.right)
+
+            if node.value > leader:
+                leader = node.value
+        return leader
 
     def for_each(self, cb):
-        pass
+
+        queue = [self]
+
+        while len(queue):
+            node = queue.pop(0)
+
+            cb(node.value)
+
+            if node.left:
+                queue.append(node.left)
+
+            if node.right:
+                queue.append(node.right)
+        return self
 
 
 my_tree = BinarySearchTree(10)
@@ -51,7 +82,15 @@ my_tree.insert(7)
 my_tree.insert(14)
 my_tree.insert(12345)
 
-print(my_tree.contains(12346))
+
+def double(num):
+    print(num * 2)
+    return num * 2
+
+
+my_tree.for_each(double)
+
+print(my_tree.left)
 
 
 # print(my_tree)
