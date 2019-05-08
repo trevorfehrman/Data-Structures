@@ -3,7 +3,7 @@ import math
 
 class Heap:
     def __init__(self):
-        self.storage = [30, 10, 20]
+        self.storage = []
 
     def __repr__(self):
         return f'{self.storage}'
@@ -14,38 +14,90 @@ class Heap:
             self._bubble_up(len(self.storage) - 1)
 
     def delete(self):
-        pass
+        if len(self.storage) <= 0:
+            return
+
+        self.storage[0], self.storage[-1] = self.storage[-1], self.storage[0]
+        if len(self.storage) == 2:
+            snatched = self.storage.pop(0)
+        elif len(self.storage) == 1:
+            snatched = self.storage.pop(0)
+        else:
+            snatched = self.storage.pop(- 1)
+
+        self._sift_down(0)
+
+        return snatched
 
     def get_max(self):
-        pass
+        return self.storage[0]
 
     def get_size(self):
-        pass
+        return len(self.storage)
 
     def _bubble_up(self, index):
         child_index = index
         parent_index = math.floor((child_index - 1) / 2)
         while parent_index >= 0:
             if self.storage[child_index] > self.storage[parent_index]:
-                temp = self.storage[parent_index]
-                self.storage[parent_index] = self.storage[child_index]
-                self.storage[child_index] = temp
+                self.storage[child_index], self.storage[parent_index] = self.storage[parent_index], self.storage[child_index]
                 child_index = parent_index
                 parent_index = math.floor((child_index - 1) / 2)
             else:
                 return
 
     def _sift_down(self, index):
-        pass
+        max_index = len(self.storage) - 1
+        parent_index = index
+
+        if len(self.storage) < 3:
+            return
+        print(self.storage)
+        if self.storage[1] > self.storage[2]:
+            child_index = 1
+        else:
+            child_index = 2
+
+        while True:
+
+            if self.storage[parent_index] < self.storage[child_index]:
+                self.storage[parent_index], self.storage[child_index] = self.storage[child_index], self.storage[parent_index]
+
+                parent_index = child_index
+
+                if parent_index * 2 + 1 <= max_index:
+                    first_child_index = parent_index * 2 + 1
+                else:
+                    first_child_index = max_index
+                if parent_index * 2 + 2 <= max_index:
+                    second_child_index = parent_index * 2 + 2
+                else:
+                    second_child_index = max_index
+
+                if self.storage[first_child_index] > self.storage[second_child_index]:
+                    child_index = first_child_index
+                else:
+                    child_index = second_child_index
+
+            else:
+                return
 
 
 my_heap = Heap()
-# my_heap.insert(10)
-# my_heap.insert(20)
-# my_heap.insert(30)
-my_heap.insert(40)
-my_heap.insert(50)
+my_heap.insert(6)
+my_heap.insert(8)
+my_heap.insert(10)
+my_heap.insert(9)
 my_heap.insert(1)
-my_heap.insert(21)
-
+my_heap.insert(9)
+my_heap.insert(1)
+my_heap.insert(5)
+my_heap.delete()
+my_heap.delete()
+my_heap.delete()
+my_heap.delete()
+my_heap.delete()
+my_heap.delete()
+my_heap.delete()
+my_heap.delete()
 print(my_heap)
